@@ -1,5 +1,8 @@
+import React from 'react';
+import LoginScreen from '../LoginScreen/LoginScreen';
+
 export default function App() {
   return (
-    <div>hello kit</div>
+    <LoginScreen />
   );
 }

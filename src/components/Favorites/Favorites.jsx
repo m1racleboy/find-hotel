@@ -10,6 +10,9 @@ export default function Favorites() {
       <MySelect>Цена</MySelect>
       <ul className="favorites__list">
         <HotelCard />
+        <HotelCard />
+        <HotelCard />
+        <HotelCard />
       </ul>
     </div>
   );

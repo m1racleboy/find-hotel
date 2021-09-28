@@ -1,14 +1,9 @@
 import React from 'react';
 
-export default function MyButton(props) {
-  const {
-    type,
-    children,
-  } = props;
-
+export default function MyButton({ children, ...props }) {
   return (
     <>
-      <button className="button" type={type}>{children}</button>
+      <button className="button" {...props}>{children}</button>
     </>
   );
 }

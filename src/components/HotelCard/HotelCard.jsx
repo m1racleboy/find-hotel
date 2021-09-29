@@ -2,36 +2,12 @@ import React from 'react';
 
 export default function HotelCard(props) {
   const {
-    title,
-    date,
-    daysCount,
-    stars,
-    price,
-    isFavorite,
     withHome,
   } = props;
   const value = 4;
   const starsCount = Array.from({ length: 5 }, (_, i) => i + 1);
 
   return (
-    // <li className="hotel-card">
-    //   <div>
-    //     <h2>{title}</h2>
-    //     <button></button>
-    //   </div>
-    //   <p>{date} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}</p>
-    //   <div>
-    //     <ul>
-    //       <li></li>
-    //       <li></li>
-    //       <li></li>
-    //       <li></li>
-    //       <li></li>
-    //     </ul>
-    //     <p>Price: <span>{price} ₽</span></p>
-    //   </div>
-
-    // </li>
     <li className="hotel-card">
       {withHome
         ?

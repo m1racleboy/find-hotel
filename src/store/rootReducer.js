@@ -1,11 +1,12 @@
 const initialState = {
+  hotels: [],
+  favoriteHotels: [],
   userData: {
     email: '',
     password: '',
   },
   isAuth: false,
   isLoading: true,
-  favoriteHotels: [],
   images: [
     'img/img-1.png',
     'img/img-2.png',
@@ -14,23 +15,24 @@ const initialState = {
   ],
 }
 
-export const UserActions = {
+export const Actions = {
   SET_USER_DATA: 'SET_USER_DATA',
-  SET_FAVORITE_HOTEL: 'SET_FAVORITE_HOTEL',
-  CHECK_AUTH: 'CHECK_AUTH',
-  CHECK_LOADING: 'CHECK_LOADING',
-  SET_SORT_TYPE: 'SET_SORT_TYPE',
   DELETE_USER_DATA: 'DELETE_USER_DATA',
-}
+  CHECK_AUTH: 'CHECK_AUTH',
+  CHANGE_LOADING_STATUS: 'CHANGE_LOADING_STATUS',
+  SET_HOTELS: 'SET_HOTELS',
+  FETCH_HOTELS: 'FETCH_HOTELS',
+};
 
-export default function userReducer(state = initialState, action) {
+export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case UserActions.SET_USER_DATA:
+    case Actions.SET_USER_DATA:
       return {
         ...state,
         userData: action.payload,
+        isAuth: true,
       };
-    case UserActions.DELETE_USER_DATA:
+    case Actions.DELETE_USER_DATA:
       return {
         ...state,
         userData: {
@@ -39,28 +41,30 @@ export default function userReducer(state = initialState, action) {
           isAuth: false,
         },
       };
-    case UserActions.CHECK_AUTH:
+    case Actions.CHECK_AUTH:
       return {
         ...state,
         isAuth: action.payload
       };
-    case UserActions.CHECK_LOADING:
+    case Actions.CHANGE_LOADING_STATUS:
       return {
         ...state,
         isLoading: action.payload,
       };
-    case UserActions.SET_FAVORITE_HOTEL:
+    case Actions.SET_HOTELS:
       return {
-
-      };
-
+        ...state,
+        hotels: action.payload,
+      }
     default: return state;
   }
-}
-// actionCreator ↓ передаем этот кал в диспач, чтобы удалить фэйворит нужно просто передать айдишник и отфильтровать массив (т.к. фильтр возвращает новый массив) state.favoriteHotels.filter(item => item.id !== action.payload)
-export const login = payload => ({ type: UserActions.SET_USER_DATA, payload });
-export const logout = () => ({ type: UserActions.DELETE_USER_DATA });
-export const checkAuth = payload => ({ type: UserActions.CHECK_AUTH, payload });
-export const checkLoading = payload => ({ type: UserActions.CHECK_LOADING, payload });
-export const setFavoriteHotel = payload => ({ type: UserActions.SET_FAVORITE_HOTEL, payload });
+};
 
+// actionCreator ↓ передаем этот кал в диспач, чтобы удалить фэйворит нужно просто передать айдишник и отфильтровать массив (т.к. фильтр возвращает новый массив) state.favoriteHotels.filter(item => item.id !== action.payload)
+export const login = payload => ({ type: Actions.SET_USER_DATA, payload });
+export const logout = () => ({ type: Actions.DELETE_USER_DATA });
+export const checkAuth = payload => ({ type: Actions.CHECK_AUTH, payload });
+export const changeLoadingStatus = payload => ({ type: Actions.CHANGE_LOADING_STATUS, payload });
+
+export const setHotels = payload => ({ type: Actions.SET_HOTELS, payload });
+export const fetchHotels = () => ({ type: Actions.FETCH_HOTELS });

@@ -3,7 +3,7 @@ import MyButton from '../UI/button/MyButton';
 import MyInput from '../UI/input/MyInput';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../hooks/useInput';
-import { checkAuth, login } from '../../store/reducers/userReducer';
+import { changeLoadingStatus, login } from '../../store/rootReducer';
 
 export default function LoginPopup() {
   const email = useInput('', { isEmpty: true, minLength: 14, maxLength: 30, isEmail: true });
@@ -12,12 +12,13 @@ export default function LoginPopup() {
 
   const loginHandler = (e) => {
     e.preventDefault();
+    dispatch(changeLoadingStatus(true));
     dispatch(login({
       email: email.value,
       password: password.value,
     }));
-    dispatch(checkAuth(true));
     localStorage.setItem('auth', 'true');
+    dispatch(changeLoadingStatus(false));
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginPopup from '../LoginPopup/LoginPopup';
+import LoginPopup from '../../components/LoginPopup/LoginPopup';
 
 export default function LoginScreen() {
   return (

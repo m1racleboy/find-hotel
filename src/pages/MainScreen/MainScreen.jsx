@@ -1,11 +1,13 @@
 import React from 'react';
-import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
-import Favorites from '../Favorites/Favorites';
-import Header from '../Header/Header';
-import HotelCard from '../HotelCard/HotelCard';
-import SearchHotel from '../SearchHotel/SearchHotel';
+import { useSelector } from 'react-redux';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+import Favorites from '../../components/Favorites/Favorites';
+import Header from '../../components/Header/Header';
+import HotelCard from '../../components/HotelCard/HotelCard';
+import SearchHotel from '../../components/SearchHotel/SearchHotel';
 
 export default function MainScreen() {
+  const images = useSelector(state => state.user.images);
   const favoriteHotels = 3;
   return (
     <>
@@ -25,18 +27,9 @@ export default function MainScreen() {
             </div>
             <div className="catalog-hotels__slider">
               <ul className="catalog-hotels__slide-list">
-                <li className="catalog-hotels__slide-item">
-                  <img className="catalog-hotels__slide-img" src="img/img-2.png" width="164" height="149" alt="img2" />
-                </li>
-                <li className="catalog-hotels__slide-item">
-                  <img className="catalog-hotels__slide-img" src="img/img-3.png" width="164" height="149" alt="igm3" />
-                </li>
-                <li className="catalog-hotels__slide-item">
-                  <img className="catalog-hotels__slide-img" src="img/img-1.png" width="164" height="149" alt="img1" />
-                </li>
-                <li className="catalog-hotels__slide-item">
-                  <img className="catalog-hotels__slide-img" src="img/img-4.png" width="164" height="149" alt="img4" />
-                </li>
+                {images.map(img => <li className="catalog-hotels__slide-item">
+                  <img className="catalog-hotels__slide-img" src={img} width="164" height="149" alt={img.match(/img-\d/g)} />
+                </li>)}
               </ul>
             </div>
             <h3 className="catalog-hotels__favorite-count">Добавлено в Избранное: <span className="catalog-hotels__favorite-count--value">{favoriteHotels}</span> {favoriteHotels === 1 ? 'отель' : favoriteHotels < 5 ? 'отеля' : 'отелей'}</h3>

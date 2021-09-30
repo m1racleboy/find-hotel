@@ -3,7 +3,7 @@ import { put, takeEvery, call, select } from 'redux-saga/effects';
 import { HotelActions, setHotels } from '../actions/hotelActions';
 
 const fetchHotelsFromApi = ({ location, date, daysCount }) => fetch(
-  `http://engine.hotellook.com/api/v2/cache.json?location=${location}&currency=rub&checkIn=${date}&checkOut=${dayjs().add(daysCount, 'day').format('YYYY-MM-DD')}&limit=10`,
+  `https://engine.hotellook.com/api/v2/cache.json?location=${location}&currency=rub&checkIn=${date}&checkOut=${dayjs().add(daysCount, 'day').format('YYYY-MM-DD')}&limit=10`,
   {
     method: 'get',
   });

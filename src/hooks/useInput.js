@@ -8,7 +8,6 @@ export const useInput = (initialValue, validations) => {
 
   const onChange = (evt) => {
     setValue(evt.target.value);
-    console.log(valid.inputValid);
   };
 
   const onBlur = (evt) => {

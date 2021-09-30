@@ -375,6 +375,10 @@ a {
   margin-bottom: 16px;
 }
 
+input[type=date]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
 .search-hotel__date {
 	background: url("../img/calendar.svg") no-repeat 95% 60%;
 }
@@ -652,8 +656,7 @@ a {
 
 .catalog-hotels__slider-button-prev:disabled,
 .catalog-hotels__slider-button-next:disabled {
-  background-color: rgba(156, 143, 143, 0.1);
-  color: var(--black);
+  display: none;
 }
 
 .error-paragraph {

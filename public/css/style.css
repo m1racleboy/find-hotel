@@ -194,22 +194,33 @@ a {
 }
 
 .select:hover,
-.select:active {
+.select:active,
+.select--active {
   border: 1px solid var(--dark-green);
   color: var(--dark-green);
   cursor: pointer;
 }
 
-.upper {
+.upper,
+.upper--active {
   position: absolute;
-  top: 7px;
-  right: 18px;
+  top: 8px;
+  right: 14px;
 }
 
-.lower {
+.lower,
+.lower--active {
   position: absolute;
-  bottom: 8px;
-  right: 18px;
+  bottom: 6px;
+  right: 14px;
+}
+
+.upper--active > path {
+  fill: var(--dark-green);
+}
+
+.lower--active > path {
+  fill: var(--dark-green);
 }
 
 .login-screen {

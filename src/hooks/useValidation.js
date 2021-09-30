@@ -39,7 +39,6 @@ export const useValidation = (value, validations) => {
           break;
         }
         case 'isOnlyNumbers': {
-          console.log('?')
           const re = /^(\d){1,3}$/;
           re.test(+String(value)) ? setNumbersError(false) : setNumbersError(true);
           break;

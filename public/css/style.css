@@ -147,6 +147,11 @@ a {
   }
 }
 
+.input__wrap {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .input {
   font-family: "Roboto", "Arial", sans-serif;
   font-size: 26px;
@@ -646,11 +651,11 @@ a {
   color: var(--error-color);
 }
 
-/* .input--error {
+.input--error {
   color: var(--error-color);
   border: 1px solid var(--error-color);
 }
 
-.label--error {
+.input--error + .label {
   color: var(--error-color);
-} */
+}

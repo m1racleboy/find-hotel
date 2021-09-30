@@ -8,10 +8,17 @@ export const useInput = (initialValue, validations) => {
 
   const onChange = (evt) => {
     setValue(evt.target.value);
+    console.log(valid.inputValid);
   };
 
-  const onBlur = () => {
+  const onBlur = (evt) => {
     setDirty(true);
+    if(!valid.inputValid) {
+      evt.target.classList.add('input--error');
+    }
+    else {
+      evt.target.classList.remove('input--error');
+    }
   };
 
   return {

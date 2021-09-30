@@ -20,6 +20,7 @@ const initialState = {
     'img/img-3.png',
     'img/img-4.png',
   ],
+  currentSortType: null,
 }
 
 export const Actions = {
@@ -32,6 +33,10 @@ export const Actions = {
   FETCH_HOTELS: 'FETCH_HOTELS',
   POST_FAVORITE: 'POST_FAVORITE',
   DELETE_FAVORITE: 'DELETE_FAVORITE',
+  SORT_BY_STARS_UPPER: 'SORT_BY_STARS_UPPER',
+  SORT_BY_STARS_LOWER: 'SORT_BY_STARS_LOWER',
+  SORT_BY_PRICE_UPPER: 'SORT_BY_PRICE_UPPER',
+  SORT_BY_PRICE_LOWER: 'SORT_BY_PRICE_LOWER',
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -81,6 +86,26 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel[0].hotelId !== +action.payload)],
       }
+    case Actions.SORT_BY_STARS_UPPER:
+      return {
+        ...state,
+        favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel[0].hotelId !== +action.payload)],
+      }
+    case Actions.SORT_BY_STARS_LOWER:
+      return {
+        ...state,
+        favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel[0].hotelId !== +action.payload)],
+      }
+    case Actions.SORT_BY_PRICE_UPPER:
+      return {
+        ...state,
+        favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel[0].hotelId !== +action.payload)],
+      }
+    case Actions.SORT_BY_PRICE_LOWER:
+      return {
+        ...state,
+        favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel[0].hotelId !== +action.payload)],
+      }
     default: return state;
   }
 };
@@ -94,3 +119,8 @@ export const setQueryParameters = payload => ({ type: Actions.SET_QUERY_PARAMETE
 export const fetchHotels = () => ({ type: Actions.FETCH_HOTELS });
 export const postFavorite = payload => ({ type: Actions.POST_FAVORITE, payload });
 export const deleteFavorite = payload => ({ type: Actions.DELETE_FAVORITE, payload });
+export const sortByStarsUpper = payload => ({ type: Actions.SORT_BY_STARS_UPPER, payload });
+export const sortByStarsLower = payload => ({ type: Actions.SORT_BY_STARS_LOWER, payload });
+export const sortByPriceUpper = payload => ({ type: Actions.SORT_BY_PRICE_UPPER, payload });
+export const sortByPriceLower = payload => ({ type: Actions.SORT_BY_PRICE_LOWER, payload });
+

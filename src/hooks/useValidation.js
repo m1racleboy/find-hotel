@@ -5,9 +5,11 @@ export const useValidation = (value, validations) => {
   const [minLengthError, setMinLengthError] = useState(false);
   const [maxLengthError, setMaxLengthError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const [inputValid, setInputValid] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [isDate, setDateError] = useState(false);
+  const [numbersError, setNumbersError] = useState(false);
   const [spaceError, setSpaceError] = useState(false);
-  const [dateError, setDateError] = useState(false);
+  const [inputValid, setInputValid] = useState(false);
 
   useEffect(() => {
     for (const validation in validations) {
@@ -26,9 +28,20 @@ export const useValidation = (value, validations) => {
           re.test(String(value).toLowerCase()) ? setEmailError(false) : setEmailError(true);
           break;
         }
+        case 'isPassword': {
+          const re = /[а-яА-ЯёЁ]/;
+          re.test(String(value).toLowerCase()) ? setPasswordError(true) : setPasswordError(false);
+          break;
+        }
         case 'isDate': {
-          const re = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+          const re = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
           re.test(String(value)) ? setDateError(false) : setDateError(true);
+          break;
+        }
+        case 'isOnlyNumbers': {
+          console.log('?')
+          const re = /^(\d){1,3}$/;
+          re.test(+String(value)) ? setNumbersError(false) : setNumbersError(true);
           break;
         }
         case 'isOnlySpace': {
@@ -42,16 +55,18 @@ export const useValidation = (value, validations) => {
   }, [value]);
 
   useEffect(() => {
-    isEmpty || minLengthError || maxLengthError || emailError || spaceError ? setInputValid(false) : setInputValid(true);
-  }, [isEmpty, minLengthError, maxLengthError, emailError, spaceError]);
+    isEmpty || minLengthError || maxLengthError || emailError || passwordError || isDate || numbersError || spaceError ? setInputValid(false) : setInputValid(true);
+  }, [isEmpty, minLengthError, maxLengthError, emailError, passwordError, isDate, numbersError, spaceError]);
 
   return {
     isEmpty,
     minLengthError,
     maxLengthError,
     emailError,
+    passwordError,
+    isDate,
+    numbersError,
     spaceError,
-    dateError,
     inputValid,
   };
 };

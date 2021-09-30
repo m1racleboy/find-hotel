@@ -2,14 +2,20 @@ import dayjs from 'dayjs';
 import React from 'react';
 import MyButton from '../UI/button/MyButton';
 import MyInput from '../UI/input/MyInput';
+import MyError from '../UI/error/MyError';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../hooks/useInput';
 import { setQueryParameters } from '../../store/rootReducer';
 
+const LOCATION_MIN_LENGTH = 3;
+const LOCATION_MAX_LENGTH = 50;
+const DAYS_COUNT_MIN_LENGTH = 1;
+const DAYS_CONT_MAX_LENGTH = 30;
+
 export default function SearchHotel() {
-  const locationInput = useInput('', { isEmpty: true, minLength: 3, maxLength: 30, isOnlySpace: true });
-  const dateInput = useInput(``, { isEmpty: true, isDate: true });
-  const daysCountInput = useInput('', { isEmpty: true, minLength: 1, maxLength: 3, isOnlySpace: true });
+  const locationInput = useInput('', { isEmpty: true, minLength: LOCATION_MIN_LENGTH, maxLengthError: LOCATION_MAX_LENGTH, isOnlySpace: true });
+  const dateInput = useInput(`${dayjs().format('YYYY-MM-DD')}`, { isEmpty: true, isDate: true });
+  const daysCountInput = useInput('', { isEmpty: true, minLength: DAYS_COUNT_MIN_LENGTH, maxLengthError: DAYS_CONT_MAX_LENGTH, isOnlyNumbers: true, isOnlySpace: true });
   const dispatch = useDispatch();
 
   const searchHandler = (e) => {
@@ -31,10 +37,13 @@ export default function SearchHotel() {
           type={'text'}
           name={'location'}
           id={'location'}
-          required
         >
           Локация
         </MyInput>
+        {(locationInput.isDirty && locationInput.isEmpty) && <MyError>Поле локации не может быть пустым</MyError>}
+        {(locationInput.isDirty && locationInput.minLengthError) && <MyError>Слишком короткий запрос, осталось: {LOCATION_MIN_LENGTH - locationInput.value.length}</MyError>}
+        {(locationInput.isDirty && locationInput.maxLengthError) && <MyError>Слишком длинный запрос, превышен на: {locationInput.value.length - LOCATION_MAX_LENGTH}</MyError>}
+        {(locationInput.isDirty && locationInput.spaceError) && <MyError>Поле локации не может содержать пробелы</MyError>}
         <MyInput
           onChange={(e) => dateInput.onChange(e)}
           onBlur={(e) => dateInput.onBlur(e)}
@@ -46,6 +55,8 @@ export default function SearchHotel() {
         >
           Дата заселения
         </MyInput>
+        {(dateInput.isDirty && dateInput.isEmpty) && <MyError>Поле даты заселения не может быть пустым</MyError>}
+        {(dateInput.isDirty && dateInput.isDate) && <MyError>Некорректная дата</MyError>}
         <MyInput
           onChange={(e) => daysCountInput.onChange(e)}
           onBlur={(e) => daysCountInput.onBlur(e)}
@@ -53,11 +64,21 @@ export default function SearchHotel() {
           type={'text'}
           name={'days-count'}
           id={'days-count'}
-          required
         >
           Количество дней
         </MyInput>
-        <MyButton className="button" type={'submit'}>Найти</MyButton>
+        {(daysCountInput.isDirty && daysCountInput.isEmpty) && <MyError>Поле количество дней не может быть пустым</MyError>}
+        {(daysCountInput.isDirty && daysCountInput.minLengthError) && <MyError>Слишком короткий запрос, осталось: {DAYS_COUNT_MIN_LENGTH - daysCountInput.value.length}</MyError>}
+        {(daysCountInput.isDirty && daysCountInput.maxLengthError) && <MyError>Слишком длинный запрос, превышен на: {daysCountInput.value.length - DAYS_CONT_MAX_LENGTH}</MyError>}
+        {(daysCountInput.isDirty && daysCountInput.numbersError) && <MyError>Поле количество дней должно содержать только числа</MyError>}
+        {(daysCountInput.isDirty && daysCountInput.spaceError) && <MyError>Поле количество дней не может содержать пробелы</MyError>}
+        <MyButton
+          className="button"
+          type={'submit'}
+          disabled={!locationInput.inputValid || !dateInput.inputValid || !daysCountInput.inputValid}
+        >
+          Найти
+        </MyButton>
       </form>
     </section>
   );

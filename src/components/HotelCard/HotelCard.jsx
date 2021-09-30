@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { deleteFavorite, postFavorite } from '../../store/rootReducer';
 
 export default React.memo(function HotelCard(props) {
-  const favoriteHotels = useSelector(state => state.favoriteHotels);
   const dispatch = useDispatch();
+  const favoriteHotels = useSelector(state => state.favoriteHotels);
   const {
     hotel: {
       hotelId,
@@ -19,6 +19,7 @@ export default React.memo(function HotelCard(props) {
       daysCount
     }
   } = props;
+
   const starsCount = Array.from({ length: 5 }, (_, i) => i + 1);
 
   const postFavoriteHandler = (e) => {
@@ -40,9 +41,18 @@ export default React.memo(function HotelCard(props) {
           <div className="hotel-card__content">
             <div className="hotel-card__top-wrap">
               <h2 className="hotel-card__title">{hotelName}</h2>
-              <button className={favoriteHotels.find(item => item[0].hotelId === hotelId) ? 'hotel-card__favorite-button--active' : "hotel-card__favorite-button"} onClick={postFavoriteHandler} data-id={hotelId}></button>
+              <button
+                className={favoriteHotels.find(item => item[0].hotelId === hotelId)
+                  ? 'hotel-card__favorite-button--active'
+                  : "hotel-card__favorite-button"}
+                onClick={postFavoriteHandler}
+                data-id={hotelId}
+              >
+              </button>
             </div>
-            <p className="hotel-card__date-info">{dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}</p>
+            <p className="hotel-card__date-info">
+              {dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}
+            </p>
             <div className="hotel-card__bottom-wrap">
               <ul className="hotel-card__star-list">
                 {starsCount.map((_, i) => <li className={i < stars ? "hotel-card__star-item--active" : "hotel-card__star-item"} key={i}>
@@ -59,9 +69,18 @@ export default React.memo(function HotelCard(props) {
         <>
           <div className="hotel-card__top-wrap">
             <h2 className="hotel-card__title">{hotelName}</h2>
-            <button className={favoriteHotels.find(item => item[0].hotelId === hotelId) ? 'hotel-card__favorite-button--active' : "hotel-card__favorite-button"} onClick={postFavoriteHandler} data-id={hotelId}></button>
+            <button
+              className={favoriteHotels.find(item => item[0].hotelId === hotelId)
+                ? 'hotel-card__favorite-button--active'
+                : "hotel-card__favorite-button"}
+              onClick={postFavoriteHandler}
+              data-id={hotelId}
+            >
+            </button>
           </div>
-          <p className="hotel-card__date-info">{dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}</p>
+          <p className="hotel-card__date-info">
+            {dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}
+          </p>
           <div className="hotel-card__bottom-wrap">
             <ul className="hotel-card__star-list">
               {starsCount.map((_, i) => <li className={i < stars ? "hotel-card__star-item--active" : "hotel-card__star-item"} key={i}>

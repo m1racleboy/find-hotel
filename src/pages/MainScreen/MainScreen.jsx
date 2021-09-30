@@ -49,7 +49,11 @@ export default React.memo(function MainScreen() {
                 </li>)}
               </ul>
             </div>
-            <h3 className="catalog-hotels__favorite-count">Добавлено в Избранное: <span className="catalog-hotels__favorite-count--value">{favoriteHotels.length}</span> {favoriteHotels.length === 1 ? 'отель' : favoriteHotels.length < 5 && favoriteHotels.length !== 0 ? 'отеля' : 'отелей'}</h3>
+            <h3 className="catalog-hotels__favorite-count">
+              Добавлено в Избранное:
+              <span className="catalog-hotels__favorite-count--value"> {favoriteHotels.length} </span>
+              {favoriteHotels.length === 1 ? 'отель' : favoriteHotels.length < 5 && favoriteHotels.length !== 0 ? 'отеля' : 'отелей'}
+            </h3>
             <ul className="catalog-hotels__list">
               {hotels && hotels.length > 0 ? hotels.map(hotel => <HotelCard withHome={true} key={hotel.hotelId} hotel={hotel} dateInfo={queryParameters} />)
                 : <h2 className="catalog-hotels__favorite-count">По вашему запросу ничего не найдено</h2>}

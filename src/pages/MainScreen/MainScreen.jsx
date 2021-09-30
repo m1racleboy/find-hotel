@@ -9,6 +9,7 @@ import Header from '../../components/Header/Header';
 import HotelCard from '../../components/HotelCard/HotelCard';
 import SearchHotel from '../../components/SearchHotel/SearchHotel';
 import Loader from '../../components/UI/Loader/Loader';
+import Slider from '../../components/Slider/Slider';
 
 export default React.memo(function MainScreen() {
   const dispatch = useDispatch();
@@ -42,13 +43,7 @@ export default React.memo(function MainScreen() {
               </ul>
               <p className="catalog-hotels__date">{dayjs(queryParameters.date).format('YYYY MMMM DD')}</p>
             </div>
-            <div className="catalog-hotels__slider">
-              <ul className="catalog-hotels__slide-list">
-                {images.map(img => <li className="catalog-hotels__slide-item" key={img}>
-                  <img className="catalog-hotels__slide-img" src={img} width="164" height="149" alt={img.replace(/(img\/)/g, '')} />
-                </li>)}
-              </ul>
-            </div>
+            <Slider images={images} />
             <h3 className="catalog-hotels__favorite-count">
               Добавлено в Избранное:
               <span className="catalog-hotels__favorite-count--value"> {favoriteHotels.length} </span>

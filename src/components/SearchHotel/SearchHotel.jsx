@@ -13,9 +13,9 @@ const DAYS_COUNT_MIN_LENGTH = 1;
 const DAYS_CONT_MAX_LENGTH = 30;
 
 export default function SearchHotel() {
-  const locationInput = useInput('', { isEmpty: true, minLength: LOCATION_MIN_LENGTH, maxLengthError: LOCATION_MAX_LENGTH, isOnlySpace: true });
+  const locationInput = useInput('', { isEmpty: true, minLength: LOCATION_MIN_LENGTH, maxLength: LOCATION_MAX_LENGTH, isOnlySpace: true });
   const dateInput = useInput(`${dayjs().format('YYYY-MM-DD')}`, { isEmpty: true, isDate: true });
-  const daysCountInput = useInput('', { isEmpty: true, minLength: DAYS_COUNT_MIN_LENGTH, maxLengthError: DAYS_CONT_MAX_LENGTH, isOnlyNumbers: true, isOnlySpace: true });
+  const daysCountInput = useInput('', { isEmpty: true, minLength: DAYS_COUNT_MIN_LENGTH, maxLength: DAYS_CONT_MAX_LENGTH, isOnlySpace: true, isOnlyNumbers: true });
   const dispatch = useDispatch();
 
   const searchHandler = (e) => {
@@ -70,7 +70,7 @@ export default function SearchHotel() {
         {(daysCountInput.isDirty && daysCountInput.isEmpty) && <MyError>Поле количество дней не может быть пустым</MyError>}
         {(daysCountInput.isDirty && daysCountInput.minLengthError) && <MyError>Слишком короткий запрос, осталось: {DAYS_COUNT_MIN_LENGTH - daysCountInput.value.length}</MyError>}
         {(daysCountInput.isDirty && daysCountInput.maxLengthError) && <MyError>Слишком длинный запрос, превышен на: {daysCountInput.value.length - DAYS_CONT_MAX_LENGTH}</MyError>}
-        {(daysCountInput.isDirty && daysCountInput.numbersError) && <MyError>Поле количество дней должно содержать только числа</MyError>}
+        {(daysCountInput.isDirty && daysCountInput.numbersError) && <MyError>Поле количество дней должно содержать только числа и не превышать 3 знаков</MyError>}
         {(daysCountInput.isDirty && daysCountInput.spaceError) && <MyError>Поле количество дней не может содержать пробелы</MyError>}
         <MyButton
           className="button"

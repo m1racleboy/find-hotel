@@ -51,7 +51,7 @@ export default React.memo(function HotelCard(props) {
               </button>
             </div>
             <p className="hotel-card__date-info">
-              {dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}
+              {dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount % 10 === 1 ? 'день' : (daysCount % 10 < 5 && daysCount % 10 !== 0) ? 'дня' : 'дней'}
             </p>
             <div className="hotel-card__bottom-wrap">
               <ul className="hotel-card__star-list">
@@ -79,7 +79,7 @@ export default React.memo(function HotelCard(props) {
             </button>
           </div>
           <p className="hotel-card__date-info">
-            {dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {daysCount === 1 ? 'день' : daysCount < 5 ? 'дня' : 'дней'}
+            {dayjs(date).format('YYYY MMMM, DD')} - {daysCount} {((daysCount % 10) === 1) ? 'день' : ((daysCount % 10) < 5) ? 'дня' : 'дней'}
           </p>
           <div className="hotel-card__bottom-wrap">
             <ul className="hotel-card__star-list">

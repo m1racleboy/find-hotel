@@ -1,6 +1,13 @@
+import dayjs from "dayjs";
+
 const initialState = {
   hotels: [],
   favoriteHotels: [],
+  queryParameters: {
+    location: 'Moscow',
+    date: dayjs().format('YYYY-MM-DD'),
+    daysCount: 1,
+  },
   userData: {
     email: '',
     password: '',
@@ -21,7 +28,10 @@ export const Actions = {
   CHECK_AUTH: 'CHECK_AUTH',
   CHANGE_LOADING_STATUS: 'CHANGE_LOADING_STATUS',
   SET_HOTELS: 'SET_HOTELS',
+  SET_QUERY_PARAMETERS: 'SET_QUERY_PARAMETERS',
   FETCH_HOTELS: 'FETCH_HOTELS',
+  POST_FAVORITE: 'POST_FAVORITE',
+  DELETE_FAVORITE: 'DELETE_FAVORITE',
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -56,15 +66,31 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         hotels: action.payload,
       }
+    case Actions.SET_QUERY_PARAMETERS:
+      return {
+        ...state,
+        queryParameters: action.payload,
+      }
+    case Actions.POST_FAVORITE:
+      return {
+        ...state,
+        favoriteHotels: [...state.favoriteHotels, { ...state.hotels.filter(hotel => hotel.hotelId === +action.payload), queryParameters: { ...state.queryParameters } }],
+      }
+    case Actions.DELETE_FAVORITE:
+      return {
+        ...state,
+        favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel[0].hotelId !== +action.payload)],
+      }
     default: return state;
   }
 };
 
-// actionCreator ↓ передаем этот кал в диспач, чтобы удалить фэйворит нужно просто передать айдишник и отфильтровать массив (т.к. фильтр возвращает новый массив) state.favoriteHotels.filter(item => item.id !== action.payload)
 export const login = payload => ({ type: Actions.SET_USER_DATA, payload });
 export const logout = () => ({ type: Actions.DELETE_USER_DATA });
 export const checkAuth = payload => ({ type: Actions.CHECK_AUTH, payload });
 export const changeLoadingStatus = payload => ({ type: Actions.CHANGE_LOADING_STATUS, payload });
-
 export const setHotels = payload => ({ type: Actions.SET_HOTELS, payload });
+export const setQueryParameters = payload => ({ type: Actions.SET_QUERY_PARAMETERS, payload });
 export const fetchHotels = () => ({ type: Actions.FETCH_HOTELS });
+export const postFavorite = payload => ({ type: Actions.POST_FAVORITE, payload });
+export const deleteFavorite = payload => ({ type: Actions.DELETE_FAVORITE, payload });

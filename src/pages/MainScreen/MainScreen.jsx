@@ -1,25 +1,30 @@
 import React, { useEffect } from 'react';
+import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { fetchHotels } from '../../store/rootReducer';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import Favorites from '../../components/Favorites/Favorites';
 import Header from '../../components/Header/Header';
 import HotelCard from '../../components/HotelCard/HotelCard';
 import SearchHotel from '../../components/SearchHotel/SearchHotel';
 import Loader from '../../components/UI/Loader/Loader';
-import { changeLoadingStatus, fetchHotels } from '../../store/rootReducer';
 
-export default function MainScreen() {
+export default React.memo(function MainScreen() {
   const dispatch = useDispatch();
   const images = useSelector(state => state.images);
+  const hotels = useSelector(state => state.hotels);
   const isLoading = useSelector(state => state.isLoading);
-  const favoriteHotels = 3;
+  const queryParameters = useSelector(state => state.queryParameters);
+  const favoriteHotels = useSelector(state => state.favoriteHotels);
 
   useEffect(() => {
-    dispatch(changeLoadingStatus(true));
     dispatch(fetchHotels());
-    dispatch(changeLoadingStatus(false));
-  }, []);
+  }, [queryParameters]);
+
+  if (isLoading) {
+    <Loader />
+  }
 
   return (
     <>
@@ -33,33 +38,25 @@ export default function MainScreen() {
             <div className="catalog-hotels__wrap">
               <ul className="catalog-hotels__breadcrumbs-list">
                 <Breadcrumbs>Отели</Breadcrumbs>
-                <Breadcrumbs>Москва</Breadcrumbs>
+                <Breadcrumbs>{queryParameters.location}</Breadcrumbs>
               </ul>
-              <p className="catalog-hotels__date">07 июля 2020</p>
+              <p className="catalog-hotels__date">{dayjs(queryParameters.date).format('YYYY MMMM DD')}</p>
             </div>
             <div className="catalog-hotels__slider">
               <ul className="catalog-hotels__slide-list">
-                {images.map(img => <li className="catalog-hotels__slide-item">
+                {images.map(img => <li className="catalog-hotels__slide-item" key={img}>
                   <img className="catalog-hotels__slide-img" src={img} width="164" height="149" alt={img.replace(/(img\/)/g, '')} />
                 </li>)}
               </ul>
             </div>
-            <h3 className="catalog-hotels__favorite-count">Добавлено в Избранное: <span className="catalog-hotels__favorite-count--value">{favoriteHotels}</span> {favoriteHotels === 1 ? 'отель' : favoriteHotels < 5 ? 'отеля' : 'отелей'}</h3>
-            {isLoading
-              ? <Loader />
-              : <ul className="catalog-hotels__list">
-                <HotelCard withHome={true} />
-                <HotelCard withHome={true} />
-                <HotelCard withHome={true} />
-                <HotelCard withHome={true} />
-                <HotelCard withHome={true} />
-                <HotelCard withHome={true} />
-              </ul>
-            }
-
+            <h3 className="catalog-hotels__favorite-count">Добавлено в Избранное: <span className="catalog-hotels__favorite-count--value">{favoriteHotels.length}</span> {favoriteHotels.length === 1 ? 'отель' : favoriteHotels.length < 5 && favoriteHotels.length !== 0 ? 'отеля' : 'отелей'}</h3>
+            <ul className="catalog-hotels__list">
+              {hotels && hotels.length > 0 ? hotels.map(hotel => <HotelCard withHome={true} key={hotel.hotelId} hotel={hotel} dateInfo={queryParameters} />)
+                : <h2 className="catalog-hotels__favorite-count">По вашему запросу ничего не найдено</h2>}
+            </ul>
           </section>
         </div>
       </section>
     </>
   );
-}
+});

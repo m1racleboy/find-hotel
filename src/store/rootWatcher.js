@@ -1,20 +1,23 @@
-import { put, takeEvery, call } from 'redux-saga/effects';
+import dayjs from 'dayjs';
+import { put, takeEvery, call, select } from 'redux-saga/effects';
 import { Actions, setHotels } from './rootReducer';
 
-const fetchHotelsFromApi = () => fetch(
-  'http://engine.hotellook.com/api/v2/cache.json?location=Moscow&currency=rub&checkIn=2021-12-20&checkOut=2021-12-21&limit=10',
+const fetchHotelsFromApi = ({ location, date, daysCount }) => fetch(
+  `http://engine.hotellook.com/api/v2/cache.json?location=${location}&currency=rub&checkIn=${date}&checkOut=${dayjs().add(daysCount, 'day').format('YYYY-MM-DD')}&limit=10`,
   {
     method: 'get',
-  })
+  });
 
 function* fetchHotelWorker() {
   try {
-    const response = yield call(fetchHotelsFromApi);
+    const queryParameters = yield select(state => state.queryParameters);
+    const response = yield call(fetchHotelsFromApi, queryParameters);
     const data = yield response.json();
     yield put(setHotels(data));
   }
   catch (err) {
-    console.log('МОЯ ОШИБКА СУКА Я ЕЕ НАПИСАЛ ОНА ТУТ !!!!!!!! ТУТ БЛЯТЬ', err);
+    yield put(setHotels([]));
+    console.log(err);
   }
 }
 

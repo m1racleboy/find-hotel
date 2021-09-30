@@ -324,7 +324,7 @@ a {
 .breadcrumbs-item {
   font-family: "Roboto", Arial, sans-serif;
   font-weight: 500;
-  font-size: 32px;
+  font-size: 30px;
   line-height: 37px;
 }
 
@@ -549,26 +549,30 @@ a {
 
 .hotel-card__favorite-button,
 .hotel-card__favorite-button--active {
+  width: 21px;
+  height: 18px;
+  background-image: url('../img/heart.svg');
   background-color: inherit;
   border: none;
 }
 
-.hotel-card__favorite-button:hover svg > path,
-.hotel-card__favorite-button:active svg > path {
-  cursor: pointer;
-  fill: var(--heart-active);
+.hotel-card__favorite-button {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
 }
 
-.hotel-card__favorite-button--active:hover svg > path,
-.hotel-card__favorite-button--active:active svg > path {
+.hotel-card__favorite-button:hover,
+.hotel-card__favorite-button:active {
   cursor: pointer;
-  fill: var(--grey-star);
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
 }
 
-.hotel-card__favorite-button--active > svg > path {
-  background-color: inherit;
-  border: none;
-  fill: var(--heart-active);
+.hotel-card__favorite-button--active:hover,
+.hotel-card__favorite-button--active:active {
+  cursor: pointer;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
 }
 
 @keyframes scroll {

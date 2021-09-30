@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import HotelCard from '../HotelCard/HotelCard';
 import MySelect from '../UI/select/MySelect';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSortTypeValue, sortByPriceLower, sortByPriceUpper, sortByStarsLower, sortByStarsUpper } from '../../store/rootReducer';
+import { changeSortTypeValue, sortByPriceLower, sortByPriceUpper, sortByStarsLower, sortByStarsUpper } from '../../store/actions/hotelActions';
 
 export default function Favorites() {
   const dispatch = useDispatch();
   const [counter, setCounter] = useState(1);
-  const favoriteHotels = useSelector(state => state.favoriteHotels);
-  const currentSortType = useSelector(state => state.currentSortType);
+  const favoriteHotels = useSelector(state => state.hotel.favoriteHotels);
+  const currentSortType = useSelector(state => state.hotel.currentSortType);
+
   const SortTypes = {
     rating: 'Рейтинг',
     price: 'Цена',
   }
+
   useEffect(() => {
     if (favoriteHotels.length > 1) {
       switch (currentSortType) {

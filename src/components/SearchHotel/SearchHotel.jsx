@@ -5,7 +5,7 @@ import MyInput from '../UI/input/MyInput';
 import MyError from '../UI/error/MyError';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../hooks/useInput';
-import { setQueryParameters } from '../../store/rootReducer';
+import { setQueryParameters } from '../../store/actions/hotelActions';
 
 const LOCATION_MIN_LENGTH = 3;
 const LOCATION_MAX_LENGTH = 50;

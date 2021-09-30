@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../../router/index";
-import { changeLoadingStatus, checkAuth } from '../../store/rootReducer';
+import {checkAuth, changeLoadingStatus} from '../../store/actions/userActions';
 import Loader from '../UI/Loader/Loader';
 
 export default function AppRouter() {
   const dispatch = useDispatch();
-  const isAuth = useSelector(state => state.isAuth);
-  const isLoading = useSelector(state => state.isLoading);
+  const isAuth = useSelector(state => state.user.isAuth);
+  const isLoading = useSelector(state => state.user.isLoading);
 
   useEffect(() => {
     if (localStorage.getItem('auth')) {

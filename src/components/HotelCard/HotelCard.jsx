@@ -2,11 +2,11 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { deleteFavorite, postFavorite } from '../../store/rootReducer';
+import { deleteFavorite, postFavorite } from '../../store/actions/hotelActions';
 
 export default React.memo(function HotelCard(props) {
   const dispatch = useDispatch();
-  const favoriteHotels = useSelector(state => state.favoriteHotels);
+  const favoriteHotels = useSelector(state => state.hotel.favoriteHotels);
   const {
     hotel: {
       hotelId,

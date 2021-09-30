@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { fetchHotels } from '../../store/rootReducer';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import Favorites from '../../components/Favorites/Favorites';
 import Header from '../../components/Header/Header';
@@ -10,14 +9,15 @@ import HotelCard from '../../components/HotelCard/HotelCard';
 import SearchHotel from '../../components/SearchHotel/SearchHotel';
 import Loader from '../../components/UI/Loader/Loader';
 import Slider from '../../components/Slider/Slider';
+import { fetchHotels } from '../../store/actions/hotelActions';
 
 export default React.memo(function MainScreen() {
   const dispatch = useDispatch();
-  const images = useSelector(state => state.images);
-  const hotels = useSelector(state => state.hotels);
-  const isLoading = useSelector(state => state.isLoading);
-  const queryParameters = useSelector(state => state.queryParameters);
-  const favoriteHotels = useSelector(state => state.favoriteHotels);
+  const images = useSelector(state => state.hotel.images);
+  const hotels = useSelector(state => state.hotel.hotels);
+  const queryParameters = useSelector(state => state.hotel.queryParameters);
+  const favoriteHotels = useSelector(state => state.hotel.favoriteHotels);
+  const isLoading = useSelector(state => state.user.isLoading);
 
   useEffect(() => {
     dispatch(fetchHotels());

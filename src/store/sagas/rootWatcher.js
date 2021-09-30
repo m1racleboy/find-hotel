@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { put, takeEvery, call, select } from 'redux-saga/effects';
-import { Actions, setHotels } from './rootReducer';
+import { HotelActions, setHotels } from '../actions/hotelActions';
 
 const fetchHotelsFromApi = ({ location, date, daysCount }) => fetch(
   `http://engine.hotellook.com/api/v2/cache.json?location=${location}&currency=rub&checkIn=${date}&checkOut=${dayjs().add(daysCount, 'day').format('YYYY-MM-DD')}&limit=10`,
@@ -10,7 +10,7 @@ const fetchHotelsFromApi = ({ location, date, daysCount }) => fetch(
 
 function* fetchHotelWorker() {
   try {
-    const queryParameters = yield select(state => state.queryParameters);
+    const queryParameters = yield select(state => state.hotel.queryParameters);
     const response = yield call(fetchHotelsFromApi, queryParameters);
     const data = yield response.json();
     yield put(setHotels(data));
@@ -22,5 +22,5 @@ function* fetchHotelWorker() {
 }
 
 export function* rootWatcher() {
-  yield takeEvery(Actions.FETCH_HOTELS, fetchHotelWorker);
+  yield takeEvery(HotelActions.FETCH_HOTELS, fetchHotelWorker);
 }

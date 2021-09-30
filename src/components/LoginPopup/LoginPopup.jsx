@@ -1,10 +1,10 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useInput } from '../../hooks/useInput';
 import MyButton from '../UI/button/MyButton';
 import MyInput from '../UI/input/MyInput';
 import MyError from '../UI/error/MyError';
-import { useDispatch } from 'react-redux';
-import { useInput } from '../../hooks/useInput';
-import { changeLoadingStatus, login } from '../../store/rootReducer';
+import { changeLoadingStatus, login } from '../../store/actions/userActions';
 
 const EMAIL_MIN_LENGTH = 10;
 const MAX_LENGTH = 30;

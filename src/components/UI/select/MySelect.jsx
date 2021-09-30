@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 export default function MySelect({ children, counter, ...props }) {
   const [disabled, setDisabled] = useState(true);
-  const currentSortType = useSelector(state => state.currentSortType);
-  const favoriteHotels = useSelector(state => state.favoriteHotels);
+  const currentSortType = useSelector(state => state.hotel.currentSortType);
+  const favoriteHotels = useSelector(state => state.hotel.favoriteHotels);
   const type = children.toLowerCase();
   const upper = '-вверх';
   const lower = '-вниз';

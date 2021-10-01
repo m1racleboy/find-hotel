@@ -207,26 +207,31 @@ a {
   cursor: pointer;
 }
 
-.upper,
-.upper--active {
+.select::before,
+.select::after {
   position: absolute;
-  top: 8px;
-  right: 14px;
+  width: 9px;
+  height: 7px;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
 }
 
-.lower,
-.lower--active {
-  position: absolute;
-  bottom: 6px;
-  right: 14px;
+.select--upper-active.select::before,
+.select--lower-active.select::after{
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
 }
 
-.upper--active > path {
-  fill: var(--dark-green);
+.select::before {
+  content: url("../img/upper.svg");
+  top: 0;
+  right: 12px;
 }
 
-.lower--active > path {
-  fill: var(--dark-green);
+.select::after {
+  content: url("../img/lower.svg");
+  bottom: 14px;
+  right: 12px;
 }
 
 .login-screen {
